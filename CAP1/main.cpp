@@ -49,9 +49,15 @@ auto matches(const R& range, Ts ... ts)
 }
 
 template<typename Set, typename ... Ts>
-auto insert_all(Set& set, Ts ... ts)
+auto insertToSet(Set& set, Ts ... ts)
 {
     return (set.insert(ts).second && ...);
+}
+
+template<typename T, typename ... Ts>
+auto insert_all(std::vector<T>& vec, Ts ... ts)
+{
+    return (vec.push_back(ts), ...);
 }
 
 int main()
@@ -96,9 +102,19 @@ int main()
     std::cout << "matches(std::string{\"C++\"}, '+') = " << matches(std::string{"C++"}, '+') << std::endl;
 
     std::set<int> mySet{1, 2, 3};
-    std::cout << "Result of insert_all(mySet, 4, 5, 1) is = " << insert_all(mySet, 4, 5, 1) << "\n";
+    std::cout << "Result of insertToSet(mySet, 4, 5, 1) is = " << insertToSet(mySet, 4, 5, 1) << "\n";
     std::cout << "mySet has now: ";
     for(const auto i : mySet)
+    {
+        std::cout << i << " ";
+    }
+    std::cout << "\n";
+
+    std::vector<int> myVector{1, 2, 3};
+    std::cout << "myVector{1, 2, 3}\n";
+    insert_all(myVector, 4, 5, 6);
+    std::cout << "Vector after insert: ";
+    for(const auto i : myVector)
     {
         std::cout << i << " ";
     }
